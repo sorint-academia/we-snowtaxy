@@ -37,9 +37,9 @@ public class ReadFile {
 		//LETTURA INFO DA FILE E SALVATAGGIO SU FILE
 		ArrayList<Utente> listaUtenti = new ArrayList<>();
 		String nome, cognome, ruolo;
-		File fileOrigine = new File("C:/Users/gava3/Desktop/corso-java/info.txt");
-		File fileDest = new File("C:/Users/gava3/Desktop/corso-java/destinazione.txt");
-		
+		File fileOrigine = new File("source_file.txt").getAbsoluteFile();
+		File fileDest = new File("destination_file.txt").getAbsoluteFile();
+				
 		BufferedReader br = new BufferedReader(new FileReader(fileOrigine));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(fileDest));
 		
@@ -60,11 +60,14 @@ public class ReadFile {
 			bw.write("Nome;Cognome;Ruolo;");
 			bw.newLine();
 			for(int i=0; i<listaUtenti.size(); i++) {
-				bw.write(listaUtenti.get(i).getNome()+";"+listaUtenti.get(i).getCognome()+";"+listaUtenti.get(i).getRuolo()+";");
+				bw.write(record(listaUtenti.get(i)));
 				bw.newLine();
 			}
 		} catch (IOException err) {
 			System.out.println(err);
+		}
+		finally {
+			bw.close();
 		}
 	}
 
