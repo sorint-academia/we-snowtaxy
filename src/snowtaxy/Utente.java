@@ -1,7 +1,7 @@
 package snowtaxy;
 
 public class Utente {
-	String nome, cognome, ruolo;
+	private final String nome, cognome, ruolo;
 	
 	public Utente(String nome, String cognome, String ruolo) {
 		super();
@@ -10,28 +10,59 @@ public class Utente {
 		this.ruolo = ruolo;
 	}
 
-
 	public String getNome() {
 		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public String getCognome() {
 		return cognome;
 	}
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
-
 	public String getRuolo() {
 		return ruolo;
 	}
 
-	public void setRuolo(String ruolo) {
-		this.ruolo = ruolo;
+	@Override
+	public String toString() {
+		return "Utente [nome=" + nome + ", cognome=" + cognome + ", ruolo=" + ruolo + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cognome == null) ? 0 : cognome.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((ruolo == null) ? 0 : ruolo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Utente other = (Utente) obj;
+		if (cognome == null) {
+			if (other.cognome != null)
+				return false;
+		} else if (!cognome.equals(other.cognome))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (ruolo == null) {
+			if (other.ruolo != null)
+				return false;
+		} else if (!ruolo.equals(other.ruolo))
+			return false;
+		return true;
+	}
+	
+	
 }
