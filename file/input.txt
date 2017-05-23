@@ -1,0 +1,5 @@
+Mario;Rossi;PMO;
+Andrea;Bianchi;DEV;
+Paolo;Verdi;PAYROLL;
+Pippo;Pluto;HR;
+Matteo;Gialli;DEV;
