@@ -5,13 +5,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileOutput implements Output {
+public class FileOutput<T> implements Output<T> {
     private final File fileDest;
     private final BufferedWriter bw;
 
-    private final Transformer transformer;
+    private final Transformer<T, String> transformer;
 
-    public FileOutput(String fileName, Transformer transformer) throws IOException {
+    public FileOutput(String fileName, Transformer<T, String> transformer) throws IOException {
         fileDest = new File(fileName);
         bw = new BufferedWriter(new FileWriter(fileDest));
 
@@ -19,8 +19,8 @@ public class FileOutput implements Output {
     }
 
     @Override
-    public void writeUtente(Utente utente) throws IOException {
-        bw.write(transformer.transform(utente));
+    public void write(T t) throws IOException {
+        bw.write(transformer.transform(t));
         bw.newLine();
     }
 
