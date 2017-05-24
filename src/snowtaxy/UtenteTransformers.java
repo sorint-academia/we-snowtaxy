@@ -24,11 +24,11 @@ public class UtenteTransformers {
                 cognome = linea.substring(0, linea.indexOf(";"));
                 linea = linea.substring(cognome.length() + 1, linea.length());
                 ruolo = linea.substring(0, linea.indexOf(";"));
-                if (ruolo.equals("DEV")) {
+//                if (ruolo.equals("DEV")) {
                     return (new Utente(nome, cognome, ruolo));
-                } else {
-                    return null;
-                }
+//                } else {
+//                    return null;
+//                }
             }
         };
     }

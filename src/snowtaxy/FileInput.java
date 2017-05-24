@@ -6,13 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class FileInput<T> implements Input<T> {
+public class FileInput<Utente> implements Input<Utente> {
     private final File fileOrigine;
     private final BufferedReader br;
     
-    private final Transformer<String, T> transformer;
+    private final Transformer<String, Utente> transformer;
     
-    public FileInput(String fileName, Transformer<String, T> transformer) throws FileNotFoundException {
+    public FileInput(String fileName, Transformer<String, Utente> transformer) throws FileNotFoundException {
         fileOrigine = new File(fileName);
         br = new BufferedReader(new FileReader(fileOrigine));
         
@@ -20,7 +20,7 @@ public class FileInput<T> implements Input<T> {
     }
     
     @Override
-    public T read() throws IOException {
+    public Utente read() throws IOException {
         String line = br.readLine();
         return line != null ? transformer.transform(line) : null;
     }
