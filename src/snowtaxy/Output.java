@@ -1,7 +1,9 @@
 package snowtaxy;
 
-public class Output {
-	public String utenteToString(Utente utente) {
-		return utente.getNome() + ";" + utente.getCognome() + ";" + utente.getRuolo() + ";";
-	}
+import java.io.Closeable;
+import java.io.IOException;
+
+public interface Output extends Closeable {
+
+    void writeUtente(Utente utente) throws IOException;
 }
