@@ -3,7 +3,7 @@ package snowtaxy;
 import java.io.Closeable;
 import java.io.IOException;
 
-public interface Output extends Closeable {
+public interface Output<T> extends Closeable {
 
-    void writeUtente(Utente utente) throws IOException;
+    void write(T t) throws IOException;
 }
