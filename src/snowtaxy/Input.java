@@ -3,8 +3,10 @@ package snowtaxy;
 import java.io.Closeable;
 import java.io.IOException;
 
-public interface Input<Utente> extends Closeable {
+public interface Input extends AutoCloseable
+{
 
-    Utente read() throws IOException;
-    
+	Utente read() throws InputReadException;
+
+	void close() throws InputReadException;
 }

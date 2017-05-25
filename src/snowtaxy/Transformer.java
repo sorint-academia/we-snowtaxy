@@ -1,6 +1,7 @@
 package snowtaxy;
 
-public interface Transformer<Utente, String> {
+public interface Transformer<Utente, String>
+{
 
-    String transform(Utente utente);
+	String transform(Utente utente);
 }
