@@ -5,46 +5,48 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.function.Function;
 
-import javax.imageio.ImageWriteParam;
+public class FileInput implements Input {
+    private final File fileOrigine;
+    private final BufferedReader br;
 
-public class FileInput implements Input
-{
-	private final File fileOrigine;
-	private final BufferedReader br;
+    public FileInput(String fileName) throws FileNotFoundException {
+        fileOrigine = new File(fileName);
+        br = new BufferedReader(new FileReader(fileOrigine));
+    }
 
-	private final Transformer<String, Utente> transformer;
+    public static interface LineReader {
+        Utente readLine(String input) throws InputReadException;
+    }
 
-	public FileInput(String fileName, Transformer<String, Utente> transformer) throws FileNotFoundException
-	{
-		fileOrigine = new File(fileName);
-		br = new BufferedReader(new FileReader(fileOrigine));
+    private Function<String, Utente> lineReader;
 
-		this.transformer = transformer;
-	}
+    public void setLineReader(Function<String, Utente> lineReader) {
+        this.lineReader = lineReader;
+    }
 
-	@Override
-	public Utente read() throws InputReadException
-	{
-		try
-		{
-			String line = br.readLine();
-			return line != null ? transformer.transform(line) : null;
-		} catch (IOException e)
-		{
-			throw new InputReadException(e);
-		}
-	}
+    @Override
+    public Utente read() throws InputReadException {
+        try {
+            String linea = br.readLine();
+            if (linea == null) {
+                return null;
+            }
 
-	@Override
-	public void close() throws InputReadException
-	{
-		try
-		{
-			br.close();
-		} catch (IOException e)
-		{
-			throw new InputReadException(e);
-		}
-	}
+            return lineReader.apply(linea);
+
+        } catch (IOException e) {
+            throw new InputReadException(e);
+        }
+    }
+
+    @Override
+    public void close() throws InputReadException {
+        try {
+            br.close();
+        } catch (IOException e) {
+            throw new InputReadException(e);
+        }
+    }
 }

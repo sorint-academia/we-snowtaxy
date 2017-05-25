@@ -18,14 +18,14 @@ public class ComponentFactory
 		{
 			try
 			{
-				return new FileInput(args[1], UtenteTransformers.fromSemicolonSeparated());
+				return new FileInput(args[1], UtenteTransformers.fromDelimitedInput());
 			} catch (FileNotFoundException e)
 			{
 				throw new ComponentCreationException("Error creating file input", e);
 			}
 		} else if (args.length == 0 || args.length == 2 && args[0].equals("s"))
 		{
-			return new StdInput(UtenteTransformers.fromSemicolonSeparated());
+			return new StdInput(UtenteTransformers.fromDelimitedInput());
 		} else
 		{
 			throw new ComponentCreationException("Parameter not valid");
