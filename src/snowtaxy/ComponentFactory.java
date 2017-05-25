@@ -3,6 +3,13 @@ package snowtaxy;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import snowtaxy.io.FileInput;
+import snowtaxy.io.FileOutput;
+import snowtaxy.io.Input;
+import snowtaxy.io.Output;
+import snowtaxy.io.StdInput;
+import snowtaxy.io.StdOutput;
+
 public class ComponentFactory
 {
 	private final String[] args;

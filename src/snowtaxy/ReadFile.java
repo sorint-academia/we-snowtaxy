@@ -1,24 +1,24 @@
 package snowtaxy;
 
-import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class ReadFile
-{
-	public static void main(String[] args)
-	{
-		ComponentFactory componentFactory = new ComponentFactory(args);
+import snowtaxy.io.Input;
+import snowtaxy.io.Output;
 
-		try (Input input = componentFactory.createInput(); Output output = componentFactory.createOutput();)
-		{
-			Utente utente;
-			while ((utente = input.read()) != null)
-			{
-				output.write(utente);
-			}
-			System.out.println("Transfer succeded!!!!!");
-		} catch (ComponentCreationException | OutputWriteException | InputReadException e)
-		{
-			e.printStackTrace();
-		}
-	}
+public class ReadFile {
+
+    public static void main(String[] args) {
+        ComponentFactory componentFactory = new ComponentFactory(args);
+        BlockingQueue<Utente> messageQueue = new LinkedBlockingQueue<>();
+
+        try {
+
+            Input input = componentFactory.createInput(messageQueue);
+            Output output = componentFactory.createOutput(messageQueue);
+
+        } catch (ComponentCreationException e) {
+            e.printStackTrace();
+        }
+    }
 }

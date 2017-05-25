@@ -1,4 +1,4 @@
-package snowtaxy;
+package snowtaxy.io;
 
 @SuppressWarnings("serial")
 public class InputReadException extends Exception

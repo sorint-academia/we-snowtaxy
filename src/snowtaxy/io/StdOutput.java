@@ -1,7 +1,10 @@
-package snowtaxy;
+package snowtaxy.io;
 
 import java.io.IOException;
 import java.io.PrintStream;
+
+import snowtaxy.Transformer;
+import snowtaxy.Utente;
 
 public class StdOutput implements Output
 {

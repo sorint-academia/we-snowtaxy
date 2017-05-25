@@ -1,9 +1,12 @@
-package snowtaxy;
+package snowtaxy.io;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import snowtaxy.Transformer;
+import snowtaxy.Utente;
 
 public class FileOutput implements Output
 {
