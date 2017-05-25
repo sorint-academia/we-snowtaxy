@@ -2,6 +2,7 @@ package snowtaxy.io;
 
 import java.util.concurrent.BlockingQueue;
 
+import snowtaxy.Transformer;
 import snowtaxy.Utente;
 
 public abstract class Input extends Thread implements AutoCloseable {
@@ -12,7 +13,7 @@ public abstract class Input extends Thread implements AutoCloseable {
         start();
     }
 
-    protected abstract Utente read() throws InputReadException;
+	protected abstract Utente read() throws InputReadException;
 
     public abstract void close() throws InputReadException;
 

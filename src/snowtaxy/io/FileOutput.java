@@ -4,26 +4,27 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
 
-public class FileOutput implements Output
+public class FileOutput extends Output
 {
 	private final File fileDest;
 	private final BufferedWriter bw;
 
 	private final Transformer<Utente, String> transformer;
 
-	public FileOutput(String fileName, Transformer<Utente, String> transformer) throws IOException
+	public FileOutput(String fileName, Transformer<Utente, String> transformer, BlockingQueue<Utente> messageQueue) throws IOException
 	{
+		super(messageQueue);
 		fileDest = new File(fileName);
 		bw = new BufferedWriter(new FileWriter(fileDest));
 
 		this.transformer = transformer;
 	}
 
-	@Override
 	public void write(Utente utente) throws OutputWriteException
 	{
 		try
@@ -37,7 +38,6 @@ public class FileOutput implements Output
 
 	}
 
-	@Override
 	public void close() throws OutputWriteException
 	{
 		try

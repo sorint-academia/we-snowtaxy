@@ -5,28 +5,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
 
 import javax.imageio.ImageWriteParam;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
 
-public class FileInput implements Input
+public class FileInput extends Input
 {
 	private final File fileOrigine;
 	private final BufferedReader br;
 
 	private final Transformer<String, Utente> transformer;
 
-	public FileInput(String fileName, Transformer<String, Utente> transformer) throws FileNotFoundException
+	public FileInput(String fileName, Transformer<String, Utente> transformer, BlockingQueue<Utente> messageQueue) throws FileNotFoundException
 	{
+		super(messageQueue);
 		fileOrigine = new File(fileName);
 		br = new BufferedReader(new FileReader(fileOrigine));
 
 		this.transformer = transformer;
 	}
 
-	@Override
 	public Utente read() throws InputReadException
 	{
 		try
@@ -39,7 +40,6 @@ public class FileInput implements Input
 		}
 	}
 
-	@Override
 	public void close() throws InputReadException
 	{
 		try

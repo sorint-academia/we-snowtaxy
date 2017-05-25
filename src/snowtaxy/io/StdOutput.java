@@ -2,30 +2,30 @@ package snowtaxy.io;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.concurrent.BlockingQueue;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
 
-public class StdOutput implements Output
+public class StdOutput extends Output
 {
 	private final PrintStream out;
 
 	private final Transformer<Utente, String> transformer;
 
-	public StdOutput(Transformer<Utente, String> transformer)
+	public StdOutput(Transformer<Utente, String> transformer, BlockingQueue<Utente> messageQueue)
 	{
+		super(messageQueue);
 		out = System.out;
 
 		this.transformer = transformer;
 	}
 
-	@Override
 	public void write(Utente utente) throws OutputWriteException
 	{
 		out.println(transformer.transform(utente));
 	}
 
-	@Override
 	public void close() throws OutputWriteException
 	{
 	}
