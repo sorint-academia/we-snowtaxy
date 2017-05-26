@@ -5,62 +5,108 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.concurrent.BlockingQueue;
 
 import snowtaxy.ComponentCreationException;
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
 
-@Deprecated
-public class DBInput extends Input {
+public class DBInput extends Input
+{
 
-    // static {
-    // try {
-    // Class.forName("com.mysql.jdbc.Driver");
-    // } catch (ClassNotFoundException e) {
-    // throw new RuntimeException(e);
-    // }
-    // }
+	private Connection conn;
+	private Statement stmt;
+	private ResultSet rs;
 
-    private Connection connection;
-    private Statement statement;
-    private ResultSet resultSet;
+	private Transformer<ResultSet, Utente> transformer;
 
-    public DBInput(BlockingQueue<Utente> messageQueue, String connectionString, String table,
-            Transformer<ResultSet, Utente> transformer) throws ComponentCreationException {
-        super(messageQueue);
+	// static {
+	// try {
+	// Class.forName("com.mysql.jdbc.Driver");
+	// } catch (ClassNotFoundException e) {
+	// throw new RuntimeException(e);
+	// }
+	// }
 
-        try {
-            connection = DriverManager.getConnection(connectionString);
-            statement = connection.createStatement();
+	public DBInput(MessageQueue messageQueue, String connectionString, String table,
+			Transformer<ResultSet, Utente> transformer) throws ComponentCreationException
+	{
+		super(messageQueue);
 
-        } catch (SQLException e) {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e1) {
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e1) {
-                }
-            }
-            throw new ComponentCreationException(e);
-        }
-    }
+		this.transformer = transformer;
 
-    @Override
-    protected Utente read() throws InputReadException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+		String sql = "SELECT * FROM " + table;
+		try
+		{
+			conn = DriverManager.getConnection(connectionString);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
 
-    @Override
-    public void close() throws InputReadException {
-        // TODO Auto-generated method stub
+		} catch (SQLException e)
+		{
+			try
+			{
+				close();
+			} catch (InputReadException e1)
+			{
+			}
+			throw new ComponentCreationException(e);
+		}
 
-    }
+	}
+
+	@Override
+	protected Utente read() throws InputReadException
+	{
+		try
+		{
+			if (!rs.next())
+			{
+				return null;
+			}
+		} catch (SQLException e)
+		{
+			throw new InputReadException(e);
+		}
+		return transformer.transform(rs);
+	}
+
+	@Override
+	public void close() throws InputReadException
+	{
+		try
+		{
+			if (rs != null)
+			{
+				rs.close();
+			}
+		} catch (SQLException e)
+		{
+			throw new InputReadException(e);
+		} finally
+		{
+			try
+			{
+				if (stmt != null)
+				{
+					stmt.close();
+				}
+			} catch (SQLException e)
+			{
+				throw new InputReadException(e);
+			} finally
+			{
+				try
+				{
+					if (conn != null)
+					{
+						conn.close();
+					}
+				} catch (SQLException e)
+				{
+					throw new InputReadException(e);
+				}
+			}
+		}
+	}
 
 }

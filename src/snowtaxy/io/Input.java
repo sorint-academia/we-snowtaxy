@@ -1,40 +1,45 @@
 package snowtaxy.io;
 
-import java.util.concurrent.BlockingQueue;
-
-import snowtaxy.Transformer;
 import snowtaxy.Utente;
 
-public abstract class Input extends Thread implements AutoCloseable {
-    private final BlockingQueue<Utente> messageQueue;
+public abstract class Input extends Thread implements AutoCloseable
+{
+	private final MessageSender messageQueue;
 
-    public Input(BlockingQueue<Utente> messageQueue) {
-        this.messageQueue = messageQueue;
-        start();
-    }
+	public Input(MessageSender messageQueue)
+	{
+		this.messageQueue = messageQueue;
+	}
 
 	protected abstract Utente read() throws InputReadException;
 
-    public abstract void close() throws InputReadException;
+	public abstract void close() throws InputReadException;
 
-    @Override
-    public void run() {
-        Utente utente;
-        try {
-            while ((utente = read()) != null) {
-                messageQueue.put(utente);
-            }
-            
-            messageQueue.put(null);
-            
-        } catch (InterruptedException | InputReadException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                close();
-            } catch (InputReadException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+	@Override
+	public void run()
+	{
+		Utente utente;
+		try
+		{
+			while ((utente = read()) != null)
+			{
+				messageQueue.send(utente);
+			}
+
+			messageQueue.close();
+
+		} catch (InputReadException e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+			try
+			{
+				close();
+			} catch (InputReadException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
 }

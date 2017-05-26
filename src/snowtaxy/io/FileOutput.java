@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
@@ -16,7 +15,8 @@ public class FileOutput extends Output
 
 	private final Transformer<Utente, String> transformer;
 
-	public FileOutput(String fileName, Transformer<Utente, String> transformer, BlockingQueue<Utente> messageQueue) throws IOException
+	public FileOutput(String fileName, Transformer<Utente, String> transformer, MessageReceiver messageQueue)
+			throws IOException
 	{
 		super(messageQueue);
 		fileDest = new File(fileName);

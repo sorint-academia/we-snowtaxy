@@ -2,11 +2,12 @@ package snowtaxy;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
 
 import snowtaxy.io.FileInput;
 import snowtaxy.io.FileOutput;
 import snowtaxy.io.Input;
+import snowtaxy.io.MessageReceiver;
+import snowtaxy.io.MessageSender;
 import snowtaxy.io.Output;
 import snowtaxy.io.StdInput;
 import snowtaxy.io.StdOutput;
@@ -20,8 +21,7 @@ public class ComponentFactory
 		this.args = args;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Input createInput(BlockingQueue<Utente> messageQueue) throws ComponentCreationException
+	public Input createInput(MessageSender messageQueue) throws ComponentCreationException
 	{
 		if (args.length >= 2 && args.length <= 3 && args[0].equals("f"))
 		{
@@ -41,14 +41,13 @@ public class ComponentFactory
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public Output createOutput(BlockingQueue<Utente> messageQueue) throws ComponentCreationException
+	public Output createOutput(MessageReceiver messageQueue) throws ComponentCreationException
 	{
 		if (args.length == 3 && args[0].equals("f") || args.length == 2 && args[0].equals("s"))
 		{
 			try
 			{
-				return new FileOutput(args[1], UtenteTransformers.toSemicolonSeparated(), messageQueue);
+				return new FileOutput(args[args.length - 1], UtenteTransformers.toSemicolonSeparated(), messageQueue);
 			} catch (IOException e)
 			{
 				throw new ComponentCreationException("Error creating file output", e);

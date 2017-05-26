@@ -1,8 +1,6 @@
 package snowtaxy.io;
 
-import java.io.IOException;
 import java.io.PrintStream;
-import java.util.concurrent.BlockingQueue;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
@@ -13,7 +11,7 @@ public class StdOutput extends Output
 
 	private final Transformer<Utente, String> transformer;
 
-	public StdOutput(Transformer<Utente, String> transformer, BlockingQueue<Utente> messageQueue)
+	public StdOutput(Transformer<Utente, String> transformer, MessageReceiver messageQueue)
 	{
 		super(messageQueue);
 		out = System.out;

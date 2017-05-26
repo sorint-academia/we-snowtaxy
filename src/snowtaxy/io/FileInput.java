@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
-
-import javax.imageio.ImageWriteParam;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
@@ -19,7 +16,8 @@ public class FileInput extends Input
 
 	private final Transformer<String, Utente> transformer;
 
-	public FileInput(String fileName, Transformer<String, Utente> transformer, BlockingQueue<Utente> messageQueue) throws FileNotFoundException
+	public FileInput(String fileName, Transformer<String, Utente> transformer, MessageSender messageQueue)
+			throws FileNotFoundException
 	{
 		super(messageQueue);
 		fileOrigine = new File(fileName);
