@@ -9,6 +9,7 @@ import java.sql.Statement;
 import snowtaxy.ComponentCreationException;
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
+import snowtaxy.messages.MessageQueue;
 
 public class DBInput extends Input
 {

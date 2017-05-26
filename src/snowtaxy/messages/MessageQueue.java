@@ -1,37 +1,40 @@
-package snowtaxy.io;
+package snowtaxy.messages;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import snowtaxy.Utente;
+public class MessageQueue<T> implements MessageSender<T>, MessageReceiver<T>
+{
+	private final BlockingQueue<Message<T>> queue = new LinkedBlockingQueue<>();
 
-public class MessageQueue implements MessageSender, MessageReceiver {
-	private final BlockingQueue<Message> queue = new LinkedBlockingQueue<>();
-	
 	@Override
-	public void send(Utente utente) {
+	public void send(T t)
+	{
 		try
 		{
-			queue.put(new Message(utente));
+			queue.put(new Message<>(t));
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
-	public void close() {
+	@SuppressWarnings("unchecked")
+	public void close()
+	{
 		try
 		{
-			queue.put(Message.EOT);
+			queue.put((Message<T>) Message.EOT);
 		} catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
-	public Utente receive() {
+	public T receive()
+	{
 		try
 		{
 			return queue.take().getPayload();

@@ -6,11 +6,11 @@ import java.io.IOException;
 import snowtaxy.io.FileInput;
 import snowtaxy.io.FileOutput;
 import snowtaxy.io.Input;
-import snowtaxy.io.MessageReceiver;
-import snowtaxy.io.MessageSender;
 import snowtaxy.io.Output;
 import snowtaxy.io.StdInput;
 import snowtaxy.io.StdOutput;
+import snowtaxy.messages.MessageReceiver;
+import snowtaxy.messages.MessageSender;
 
 public class ComponentFactory
 {

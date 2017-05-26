@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
+import snowtaxy.messages.MessageSender;
 
 public class StdInput extends Input
 {

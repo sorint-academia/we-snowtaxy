@@ -1,8 +1,8 @@
 package snowtaxy;
 
 import snowtaxy.io.Input;
-import snowtaxy.io.MessageQueue;
 import snowtaxy.io.Output;
+import snowtaxy.messages.MessageQueue;
 
 public class ReadFile
 {

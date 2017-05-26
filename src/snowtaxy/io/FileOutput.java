@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
+import snowtaxy.messages.MessageReceiver;
 
 public class FileOutput extends Output
 {

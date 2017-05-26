@@ -1,12 +1,13 @@
 package snowtaxy.io;
 
 import snowtaxy.Utente;
+import snowtaxy.messages.MessageReceiver;
 
 public abstract class Output extends Thread implements AutoCloseable
 {
-	private final MessageReceiver messageQueue;
+	private final MessageReceiver<Utente> messageQueue;
 
-	public Output(MessageReceiver messageQueue)
+	public Output(MessageReceiver<Utente> messageQueue)
 	{
 		this.messageQueue = messageQueue;
 	}

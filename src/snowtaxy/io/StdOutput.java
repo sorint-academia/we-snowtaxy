@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
+import snowtaxy.messages.MessageReceiver;
 
 public class StdOutput extends Output
 {

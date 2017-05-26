@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import snowtaxy.Transformer;
 import snowtaxy.Utente;
+import snowtaxy.messages.MessageSender;
 
 public class FileInput extends Input
 {
